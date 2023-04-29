@@ -1,24 +1,25 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class WordsRemoverTest {
     @Test
     public void testRemoveWords() {
-        String text = "This text should be OK like A this";
-        String pattern = "\\b\\w*[AaOrK]+\\w*\\b";
-        String expected = "This text should be  like  this";
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
-        WordsRemover.RemoveWords(text, pattern);
-
-        String actual = outContent.toString().trim();
-        assertEquals(expected, actual);
+        String text = "This text is OK like A this A1a2O3r4K5 a";
+        String expected = "This text is  like  this  ";
+        WordsRemover remover = new WordsRemover();
+        String result = remover.removeWords(text);
+        Assertions.assertEquals(expected, result);
     }
+
+    @Test
+    public void testRemoveWordsWithEmpty(){
+        String text = "";
+        String expected = "";
+        WordsRemover remover = new WordsRemover();
+        String result = remover.removeWords(text);
+        Assertions.assertEquals(expected, result);
+    }
+
+
 }

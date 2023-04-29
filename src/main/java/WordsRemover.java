@@ -2,18 +2,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WordsRemover {
-    public static void main(String[] args) {
-        String text = "This text should be OK like A this";
-        String pattern = "\\b\\w*[AaOrK]+\\w*\\b";
-        RemoveWords(text, pattern);
-    }
+    private static final Pattern PATTERN = Pattern.compile("\\b\\w*[AaOrK]+\\w*\\b");
 
-    public static void RemoveWords(String text, String pattern) {
-        Pattern patter = Pattern.compile(pattern);
-        Matcher matcher = patter.matcher(text);
+    public String removeWords(final String text) {
+        Matcher matcher = PATTERN.matcher(text);
+        StringBuilder builder = new StringBuilder();
 
         while (matcher.find()) {
-            System.out.println(matcher.replaceAll(""));
+            String group = matcher.group();
+            String newWorld = group.replaceAll(group, "");
+            matcher.appendReplacement(builder, newWorld);
         }
+        matcher.appendTail(builder);
+        return builder.toString();
     }
 }
